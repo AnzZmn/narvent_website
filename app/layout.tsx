@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, JetBrains_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 import { Bricolage_Grotesque } from "next/font/google";
-
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
-  weight: "600",
-  variable: "--font-bricolage",
-  display: "swap",
-});
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Narvent",
@@ -21,10 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${bricolage.variable} ${bricolage.variable} h-full antialiased`}
-    >
+    <html lang="en">
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
