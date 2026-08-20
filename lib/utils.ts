@@ -1,12 +1,17 @@
 import { clsx, type ClassValue } from "clsx";
-import { Bricolage_Grotesque, JetBrains_Mono, Manrope } from "next/font/google";
+import {
+  Bricolage_Grotesque,
+  JetBrains_Mono,
+  Manrope,
+  Monomaniac_One,
+} from "next/font/google";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const CONTAINER = "mx-auto w-full max-w-7xl px-6 lg:px-8";
+export const CONTAINER = "mx-auto w-full max-w-8xl";
 
 export const BRAND_GRADIENT =
   "linear-gradient(135deg, var(--color-1) 0%, var(--color-2) 55%, var(--color-3) 100%)";
@@ -40,3 +45,13 @@ export const mono = JetBrains_Mono({
   variable: "--font-mono",
   weight: ["400", "500"],
 });
+
+export const maniac = Monomaniac_One({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-maniac",
+  weight: ["400"],
+});
+
+export const fontManiac: React.CSSProperties = {
+  fontFamily: "var(--font-maniac)",
+};

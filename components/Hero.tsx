@@ -1,130 +1,110 @@
+"use client";
+
 import {
   BRAND_GRADIENT,
   cn,
-  CONTAINER,
   fontDisplay,
+  fontManiac,
   fontMono,
-  gradientText,
 } from "@/lib/utils";
-import { ArrowRight, Badge, Play, Sparkles } from "lucide-react";
+import SplitText from "./SplitText";
 import { Button } from "./ui/button";
-import { HeroVisual } from "./HeroVisual";
+import HeroStats from "./HeroStats";
+import BorderGlow from "./BorderGlow";
+import { outline } from "three/examples/jsm/tsl/display/OutlineNode.js";
+import Image from "next/image";
+import OrbitalProcess from "./Orbit";
 
 export default function Hero() {
   return (
-    <section
-      id="top"
-      className="relative overflow-hidden pt-36 pb-20 sm:pt-44 sm:pb-28 lg:pt-52 lg:pb-32"
-    >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      >
+    <section id="Hero" className="w-screen h-screen flex snap-start">
+      <div className="font-bold h-auto w-screen flex flex-row justify-center items-center pt-38">
         <div
-          className="absolute -top-24 left-[8%] h-[380px] w-[380px] rounded-full opacity-30 blur-[110px]"
-          style={{
-            background: "var(--color-2)",
-            animation: "drift 18s ease-in-out infinite",
-          }}
-        />
-        <div
-          className="absolute top-0 right-[2%] h-[340px] w-[340px] rounded-full opacity-25 blur-[110px]"
-          style={{
-            background: "var(--color-3)",
-            animation: "drift 22s ease-in-out infinite reverse",
-          }}
-        />
-        <div
-          className="absolute bottom-[-100px] left-[28%] h-[300px] w-[300px] rounded-full opacity-20 blur-[100px]"
-          style={{
-            background: "var(--color-1)",
-            animation: "drift 26s ease-in-out infinite",
-          }}
-        />
-      </div>
-
-      <div
-        className={cn(
-          CONTAINER,
-          "grid items-center gap-16 lg:grid-cols-2 lg:gap-12",
-        )}
-      >
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-          <Badge
-            className="gap-1.5 rounded-full border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-medium text-white/80"
-            style={{ animation: "fade-up 0.6s ease-out both" }}
-          >
-            <Sparkles
-              className="h-3.5 w-3.5"
-              style={{ color: "var(--color-3)" }}
-            />
-            AI-native work orchestratior
-          </Badge>
-
-          <h1
-            className="mt-6 text-[2.5rem] font-bold leading-[1.08] tracking-tight sm:text-6xl lg:text-[3.2rem]"
-            style={{
-              ...fontDisplay,
-              animation: "fade-up 0.6s ease-out 0.08s both",
-            }}
-          >
-            One Platform
-            <br />
-            <span style={gradientText}>
-              Unlimited Talent
-              <br />
-              infinite Possibilities
-            </span>
-            <br />
-          </h1>
-
-          <p
-            className="mt-6 max-w-xl text-lg text-white/60"
-            style={{ animation: "fade-up 0.6s ease-out 0.16s both" }}
-          >
-            Narvent connects your tools, triggers, and AI agents into a single
-            self-running pipeline — so the work moves without anyone pushing it.
-          </p>
-
-          <div
-            className="mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
-            style={{ animation: "fade-up 0.6s ease-out 0.24s both" }}
-          >
-            <Button
-              size="lg"
-              className="group border-0 text-white"
-              style={{ backgroundImage: BRAND_GRADIENT }}
-            >
-              Start building free
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white/15 text-white bg-transparent"
-            >
-              <Play className="h-4 w-4" />
-              See it in action
-            </Button>
-          </div>
-
-          <p
-            className="mt-6 text-xs uppercase tracking-widest text-white/35"
-            style={{
-              ...fontMono,
-              animation: "fade-up 0.6s ease-out 0.32s both",
-            }}
-          >
-            No credit card · Free forever plan · Deploy in minutes
-          </p>
-        </div>
-
-        <div
-          className="relative mx-auto w-full max-w-lg lg:max-w-none"
-          style={{ animation: "fade-up 0.7s ease-out 0.2s both" }}
+          id="Content"
+          className="  flex w-screen h-screen items-start pl-20 pb-30 flex-col justify-center gap-5"
         >
-          <HeroVisual />
+          <section
+            id="Content"
+            className="relative flex min-h-[60vh] w-full items-center justify-center px-6 py-20"
+          >
+            <div className="w-full max-w-6xl">
+              <SplitText
+                text="The WorkForce Layer for every Business  Everywhere."
+                className={cn(
+                  "text-balance text-center font-bold tracking-[-0.08em] text-[#ffffff]",
+                  "text-[clamp(4rem,5vw,6rem)]",
+                  "leading-[0.95] pb-10",
+                )}
+                delay={50}
+                duration={1.25}
+                ease="power3.out"
+                splitType="words"
+                from={{ opacity: 0, y: 40 }}
+                to={{ opacity: 1, y: 0 }}
+                threshold={0.1}
+                rootMargin="-100px"
+                textAlign="initial"
+                highlightWords={["WorkForce", "Business"]}
+                highlightClassName="text-[var(--color-1)]"
+                swapWords={[
+                  ["WorkForce", "Network"],
+                  ["Business", "Worker"],
+                ]}
+                swapDuration={0.45}
+                swapInterval={6000}
+              ></SplitText>
+
+              <p
+                style={{
+                  margin: 0,
+                  width: "700px",
+                  color: "#f6f6f6",
+                  fontSize: "24px",
+                  lineHeight: "1.4",
+                  textAlign: "initial",
+                  ...fontDisplay,
+                }}
+                className="font-light"
+              >
+                AI-powered workforce infrastructure for managed staffing, gig
+                work, and enterprise operations.
+              </p>
+              <div className="flex flex-row gap-5">
+                <BorderGlow
+                  edgeSensitivity={30}
+                  glowColor="40 80 80"
+                  glowRadius={40}
+                  glowIntensity={1}
+                  coneSpread={25}
+                  animated={false}
+                  backgroundColor="var(--color-2)"
+                  colors={["#c084fc", "#f472b6", "#38bdf8"]}
+                  className="mt-8 text-xs text-wrap font-normal text-white rounded-md justify-center items-center"
+                >
+                  Request a Demo
+                </BorderGlow>
+                <BorderGlow
+                  edgeSensitivity={150}
+                  glowColor="40 80 80"
+                  glowRadius={200}
+                  glowIntensity={0.5}
+                  coneSpread={25}
+                  animated={true}
+                  colors={["#c084fc", "#f472b6", "#38bdf8"]}
+                  className="mt-8 text-white text-wrap text-xs justify-center items-center rounded-md hover:bg-amber-100"
+                >
+                  Join the Community
+                </BorderGlow>
+              </div>
+              <HeroStats />
+            </div>
+          </section>
         </div>
+
+        <section
+          id="Logo"
+          className=" flex justify-center w-screen h-screen pr-20 items-end pb-35"
+        ></section>
       </div>
     </section>
   );

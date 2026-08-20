@@ -8,6 +8,21 @@
   --color-1: #5694ff;
   --color-2: #6d56ff;
   --color-3: #c156ff;
+  --background1: #3a3645;
+  --background3: #33333c;
+  --background: #282828;
+  --background2: #34303c;
+  --textprimary: #f2ecff;
+  --textsec: #e2d5fe;
+}
+
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-y: scroll;
 }
 
 @keyframes drift {
@@ -55,4 +70,158 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.glass-card {
+  width: auto;
+  height: auto;
+
+  border-radius: 28px; /* glass panels aren't sharp-cornered — tune to your scale */
+
+  background:
+    radial-gradient(
+      circle at 22% 16%,
+      rgba(255, 255, 255, 0.55),
+      transparent 45%
+    ),
+    /* specular highlight — this alone is most of the "it's glass" read */
+    linear-gradient(180deg, rgb(90 180 255 / 0.28), rgb(125 105 255 / 0.28)); /* same tint, much lower opacity — heavy color here reads as plastic, not glass */
+
+  backdrop-filter: url(#glass-distortion) blur(6px) saturate(180%); /* saturate makes whatever's behind it pop, mimicking real refraction */
+  -webkit-backdrop-filter: blur(6px) saturate(180%); /* Safari fallback, no SVG-filter support in backdrop-filter yet */
+
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.25),
+    /* wide soft shadow — panel floats above the surface */ 0 2px 8px
+      rgba(0, 0, 0, 0.15),
+    /* tight shadow near the edge — panel still touches down */ inset 0 1px 1px
+      rgba(255, 255, 255, 0.7),
+    /* top edge catching light */ inset 0 -1px 1px rgba(255, 255, 255, 0.12),
+    /* bottom edge, dimmer, no light hitting it */ inset 0 0 24px 12px
+      rgba(255, 255, 255, 0.15); /* soft inner glow, your original idea, tuned down slightly */
+
+  border: 1px solid rgba(255, 255, 255, 0.3); /* an actual edge */
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+}
+
+.glass-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.3)
+  );
+}
+
+.perspective {
+  perspective: 1200px;
+}
+
+.backdrop-svg {
+  transform: perspective(1500px) rotateX(0deg) rotateY(0deg) scale(0.95);
+
+  transform-style: preserve-3d;
+  transform-origin: center;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.perspective:hover .backdrop-svg {
+  transform: perspective(1500px) rotateX(8deg) rotateY(-8deg) rotateZ(4deg)
+    scale(1);
+}
+
+.backdrop-wrapper {
+  position: relative;
+}
+
+.backdrop-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.45),
+    transparent 45%
+  );
+  pointer-events: none;
+}
+
+#top {
+  perspective: 1500px;
+}
+
+.hero-3d {
+  position: relative;
+  transform: rotateY(15deg) perspective(1800px) translateX(50px);
+
+  transform-style: preserve-3d;
+
+  transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+#top:hover .hero-3d {
+  transform: rotateY(0deg) translateX(0px) perspective(0px);
+}
+
+.backdrop-mask {
+  width: 1073px;
+  height: 959px;
+
+  -webkit-mask-image: url("/Glass.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-mode: alpha;
+
+  mask-image: url("/Glass.svg");
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+  mask-mode: alpha;
+
+  background:
+    radial-gradient(
+      circle at 22% 16%,
+      rgba(255, 255, 255, 0.55),
+      transparent 45%
+    ),
+    /* specular highlight — this alone is most of the "it's glass" read */
+    linear-gradient(180deg, rgb(90 180 255 / 1), rgb(125 105 255 / 1)); /* same tint, much lower opacity — heavy color here reads as plastic, not glass */
+
+  backdrop-filter: url(#glass-distortion) blur(6px) saturate(180%); /* saturate makes whatever's behind it pop, mimicking real refraction */
+  -webkit-backdrop-filter: blur(6px) saturate(180%); /* Safari fallback, no SVG-filter support in backdrop-filter yet */
+
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 1),
+    /* wide soft shadow — panel floats above the surface */ 0 2px 8px
+      rgba(0, 0, 0, 0.15),
+    /* tight shadow near the edge — panel still touches down */ inset 0 1px 1px
+      rgba(255, 255, 255, 0.7),
+    /* top edge catching light */ inset 0 -1px 1px rgba(255, 255, 255, 0.12),
+    /* bottom edge, dimmer, no light hitting it */ inset 0 0 24px 12px
+      rgba(255, 255, 255, 0.15); /* soft inner glow, your original idea, tuned down slightly */
+
+  border: 1px solid rgba(255, 255, 255, 0.3); /* an actual edge */
+  overflow: hidden;
 }

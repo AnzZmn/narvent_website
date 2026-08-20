@@ -1,5 +1,4 @@
 import { fontMono } from "@/lib/utils";
-import "../app/globals.css";
 
 export function HeroVisual() {
   const nodes = [
