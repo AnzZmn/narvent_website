@@ -8,7 +8,9 @@ interface SectionConfig {
 interface UseForceScrollThroughSectionsOptions {
   threshold?: number;
   touchThreshold?: number;
+  wheelThreshold?: number; // min |deltaY| before a wheel tick counts as "intent to jump"
   duration?: number; // ms, controls both scroll tween and frequency lerp
+  enabled?: boolean; // set false while something else owns scroll (e.g. intro overlay)
 }
 
 // easeInOutCubic — smooth accelerate/decelerate, matches native smooth-scroll feel
@@ -20,7 +22,13 @@ function useForceScrollThroughSections(
   sections: SectionConfig[],
   options: UseForceScrollThroughSectionsOptions = {},
 ) {
-  const { threshold = 0.1, touchThreshold = 40, duration = 900 } = options;
+  const {
+    threshold = 0.1,
+    touchThreshold = 40,
+    wheelThreshold = 24,
+    duration = 900,
+    enabled = true,
+  } = options;
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [frequency, setFrequency] = useState(sections[0]?.frequency ?? 1);
@@ -49,8 +57,11 @@ function useForceScrollThroughSections(
     return () => observers.forEach((o) => o.disconnect());
   }, [sections, threshold]);
 
+  // Fix 2: land aligned with the same boundary useScrollProgress uses —
+  // bottom-aligned when moving forward (matches scrollEnd = endBottom - vh),
+  // top-aligned when moving backward (matches scrollStart = startTop).
   const triggerScroll = useCallback(
-    (targetIndex: number) => {
+    (targetIndex: number, direction: "forward" | "backward") => {
       const target = sections[targetIndex];
       const targetEl = document.getElementById(target.id);
       if (!targetEl || isAnimating.current) return;
@@ -58,7 +69,14 @@ function useForceScrollThroughSections(
       isAnimating.current = true;
 
       const startY = window.scrollY;
-      const targetY = startY + targetEl.getBoundingClientRect().top;
+      const vh = window.innerHeight;
+      const rect = targetEl.getBoundingClientRect();
+
+      const targetY =
+        direction === "forward"
+          ? startY + rect.bottom - vh // bottom-align: matches scrollEnd
+          : startY + rect.top; // top-align: matches scrollStart
+
       const startFreq = frequency;
       const targetFreq = target.frequency;
       const startTime = performance.now();
@@ -68,10 +86,7 @@ function useForceScrollThroughSections(
         const rawProgress = Math.min(elapsed / duration, 1);
         const eased = easeInOutCubic(rawProgress);
 
-        // Scroll position
         window.scrollTo(0, startY + (targetY - startY) * eased);
-
-        // Frequency interpolates continuously, same clock, same easing
         setFrequency(startFreq + (targetFreq - startFreq) * eased);
 
         if (rawProgress < 1) {
@@ -88,9 +103,11 @@ function useForceScrollThroughSections(
     [sections, frequency, duration],
   );
 
+  // Fix 1 + Fix 3: require real intent on wheel, and no-op entirely while disabled
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (activeIndex === null) return;
+      if (!enabled || activeIndex === null) return;
+      if (Math.abs(e.deltaY) < wheelThreshold) return; // ignore micro-scrolls / trackpad noise
 
       const hasNext = activeIndex < sections.length - 1;
       const hasPrev = activeIndex > 0;
@@ -100,22 +117,27 @@ function useForceScrollThroughSections(
       if (wantsNext || wantsPrev) {
         e.preventDefault();
         if (!isAnimating.current) {
-          triggerScroll(wantsNext ? activeIndex + 1 : activeIndex - 1);
+          triggerScroll(
+            wantsNext ? activeIndex + 1 : activeIndex - 1,
+            wantsNext ? "forward" : "backward",
+          );
         }
       }
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => window.removeEventListener("wheel", handleWheel);
-  }, [activeIndex, sections, triggerScroll]);
+  }, [enabled, activeIndex, sections, wheelThreshold, triggerScroll]);
 
   useEffect(() => {
     const handleTouchStart = (e: TouchEvent) => {
+      if (!enabled) return;
       touchStartY.current = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (activeIndex === null || touchStartY.current === null) return;
+      if (!enabled || activeIndex === null || touchStartY.current === null)
+        return;
 
       const deltaY = touchStartY.current - e.touches[0].clientY;
       const hasNext = activeIndex < sections.length - 1;
@@ -126,7 +148,10 @@ function useForceScrollThroughSections(
       if (wantsNext || wantsPrev) {
         e.preventDefault();
         if (!isAnimating.current) {
-          triggerScroll(wantsNext ? activeIndex + 1 : activeIndex - 1);
+          triggerScroll(
+            wantsNext ? activeIndex + 1 : activeIndex - 1,
+            wantsNext ? "forward" : "backward",
+          );
           touchStartY.current = null;
         }
       }
@@ -138,7 +163,17 @@ function useForceScrollThroughSections(
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [activeIndex, sections, touchThreshold, triggerScroll]);
+  }, [enabled, activeIndex, sections, touchThreshold, triggerScroll]);
+
+  // Fix 3 continued: if disabled mid-flight (e.g. intro finishes while a tween
+  // was somehow queued), cancel it rather than letting a stale scroll land later.
+  useEffect(() => {
+    if (!enabled && rafId.current !== null) {
+      cancelAnimationFrame(rafId.current);
+      rafId.current = null;
+      isAnimating.current = false;
+    }
+  }, [enabled]);
 
   // Cleanup any in-flight rAF on unmount
   useEffect(() => {

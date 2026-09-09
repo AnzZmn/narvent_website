@@ -268,6 +268,40 @@ const SplitText: React.FC<SplitTextProps> = ({
             });
           }
 
+          // Reserve width for swappable words up front, at split time —
+          // not after the entrance animation — so no browser has to
+          // reconcile a late layout mutation against an already-painted
+          // (and possibly already text-wrap:balance'd) line.
+          if (
+            splitType.includes("words") &&
+            swapWords.length &&
+            self.words?.length
+          ) {
+            swapWords.forEach((words) => {
+              if (words.length < 2) return;
+
+              const firstWord = words[0];
+              const dynamicWord = self.words.find(
+                (word) => word.textContent?.trim() === firstWord,
+              ) as HTMLElement | undefined;
+
+              if (!dynamicWord) return;
+
+              dynamicWord.style.display = "inline-block";
+
+              const originalText = dynamicWord.textContent || "";
+              let maxWidth = 0;
+
+              words.forEach((word) => {
+                dynamicWord.textContent = word;
+                maxWidth = Math.max(maxWidth, dynamicWord.offsetWidth);
+              });
+
+              dynamicWord.textContent = originalText;
+              dynamicWord.style.minWidth = `${maxWidth}px`;
+            });
+          }
+
           // ----------------------------------
           // Normal entrance animation
           // ----------------------------------
@@ -306,12 +340,7 @@ const SplitText: React.FC<SplitTextProps> = ({
 
               onComplete: () => {
                 animationCompletedRef.current = true;
-
                 onCompleteRef.current?.();
-
-                // --------------------------------
-                // Start word swapping
-                // --------------------------------
 
                 if (!splitType.includes("words") || swapWords.length === 0) {
                   return;
@@ -319,130 +348,47 @@ const SplitText: React.FC<SplitTextProps> = ({
 
                 const swapTimelines: gsap.core.Timeline[] = [];
 
-                // --------------------------------
-                // Process every swap group
-                // --------------------------------
-
                 swapWords.forEach((words) => {
-                  if (words.length < 2) {
-                    return;
-                  }
+                  if (words.length < 2) return;
 
                   const firstWord = words[0];
 
-                  // --------------------------------
-                  // Find the first word
-                  // --------------------------------
-
+                  // ← this line must still be here, inside onComplete too —
+                  //    it's a SEPARATE lookup from the one in onSplit, because
+                  //    onComplete needs its own closure over `dynamicWord` for
+                  //    the swap timeline below.
                   const dynamicWord = self.words.find(
                     (word) => word.textContent?.trim() === firstWord,
                   ) as HTMLElement | undefined;
 
-                  if (!dynamicWord) {
-                    return;
-                  }
-
-                  // --------------------------------
-                  // Make transform work correctly
-                  // --------------------------------
-
-                  dynamicWord.style.display = "inline-block";
-
-                  // --------------------------------
-                  // Calculate maximum width
-                  // --------------------------------
-                  //
-                  // This prevents the surrounding
-                  // words from jumping when a
-                  // replacement word has a
-                  // different width.
-                  //
-                  // --------------------------------
-
-                  const originalText = dynamicWord.textContent || "";
-
-                  let maxWidth = 0;
-
-                  words.forEach((word) => {
-                    dynamicWord.textContent = word;
-
-                    maxWidth = Math.max(maxWidth, dynamicWord.offsetWidth);
-                  });
-
-                  // Restore original word
-                  dynamicWord.textContent = originalText;
-
-                  dynamicWord.style.minWidth = `${maxWidth}px`;
-
-                  // --------------------------------
-                  // Current word
-                  // --------------------------------
+                  if (!dynamicWord) return; // ← and this guard must still be here
 
                   let currentIndex = 0;
-
-                  // --------------------------------
-                  // Create independent timeline
-                  // --------------------------------
-
                   const timeline = gsap.timeline({
                     repeat: -1,
-
                     repeatDelay: swapInterval / 1000,
                   });
 
                   timeline.call(() => {
                     currentIndex = (currentIndex + 1) % words.length;
-
                     const nextWord = words[currentIndex];
-
-                    // --------------------------------
-                    // EXIT
-                    //
-                    // Current word moves downward
-                    // --------------------------------
 
                     gsap.to(dynamicWord, {
                       yPercent: 100,
-
                       opacity: 0,
-
                       duration: swapDuration,
-
                       ease: "power3.in",
-
                       force3D: true,
-
                       onComplete: () => {
-                        // --------------------------------
-                        // Change text while invisible
-                        // --------------------------------
-
                         dynamicWord.textContent = nextWord;
-
-                        // --------------------------------
-                        // ENTER
-                        //
-                        // New word comes from above
-                        // --------------------------------
-
                         gsap.fromTo(
                           dynamicWord,
-
-                          {
-                            yPercent: -100,
-
-                            opacity: 0,
-                          },
-
+                          { yPercent: -100, opacity: 0 },
                           {
                             yPercent: 0,
-
                             opacity: 1,
-
                             duration: swapDuration,
-
                             ease: "power3.out",
-
                             force3D: true,
                           },
                         );
@@ -452,10 +398,6 @@ const SplitText: React.FC<SplitTextProps> = ({
 
                   swapTimelines.push(timeline);
                 });
-
-                // --------------------------------
-                // Store all timelines
-                // --------------------------------
 
                 el._swapTimelines = swapTimelines;
               },

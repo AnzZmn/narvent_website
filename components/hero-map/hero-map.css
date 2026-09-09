@@ -1,0 +1,40 @@
+/* Add to globals.css (or import once). Fonts: Archivo + IBM Plex Mono. */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
+@keyframes nv-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes nv-word-a {
+  0%, 40% { opacity: 1; transform: translateY(0); }
+  46%, 94% { opacity: 0; transform: translateY(-14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes nv-word-b {
+  0%, 40% { opacity: 0; transform: translateY(14px); }
+  46%, 94% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(14px); }
+}
+@keyframes nv-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.7); }
+}
+@keyframes nv-ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.nv-rise { animation: nv-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.nv-d1 { animation-delay: 0.1s; }
+.nv-d2 { animation-delay: 0.2s; }
+.nv-d3 { animation-delay: 0.3s; }
+.nv-d4 { animation-delay: 0.38s; }
+.nv-word-a { animation: nv-word-a 12s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+.nv-word-b { animation: nv-word-b 12s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+.nv-dot { animation: nv-dot 2.4s ease-in-out infinite; }
+.nv-ticker { animation: nv-ticker 24s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nv-rise, .nv-word-a, .nv-word-b, .nv-dot, .nv-ticker { animation: none; }
+  .nv-word-b { opacity: 0; }
+}

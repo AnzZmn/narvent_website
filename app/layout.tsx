@@ -3,8 +3,12 @@ import "./globals.css";
 import { Bricolage_Grotesque } from "next/font/google";
 
 export const metadata: Metadata = {
-  title: "Narvent",
-  description: "South India's Largest Manpower Solutions",
+  title: "Narvent: AI-Powered Workforce Platform | Gig Jobs & Data Operations",
+  description:
+    "Join Narvent's workforce network. Find flexible gig work, field jobs, data annotation, asset audits, and more.",
+  icons: {
+    icon: "/NarventSVG.svg",
+  },
 };
 
 const display = Bricolage_Grotesque({
@@ -20,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="overflow-x-clip">{children}</body>
     </html>
   );
 }

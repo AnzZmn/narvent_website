@@ -1,0 +1,49 @@
+/* Add to globals.css (or import once). Fonts: Archivo + IBM Plex Mono. */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
+@keyframes nv-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes nv-word-a {
+  0%, 40% { opacity: 1; transform: translateY(0); }
+  46%, 94% { opacity: 0; transform: translateY(-14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes nv-word-b {
+  0%, 40% { opacity: 0; transform: translateY(14px); }
+  46%, 94% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(14px); }
+}
+@keyframes nv-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-6deg); }
+  50% { transform: translate3d(0, -9px, 0) rotate(-4deg); }
+}
+@keyframes nv-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(5deg); }
+  50% { transform: translate3d(0, 8px, 0) rotate(3deg); }
+}
+@keyframes nv-drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); }
+  50% { transform: translate3d(0, -7px, 0) rotate(-1.5deg); }
+}
+@keyframes nv-ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.nv-rise { animation: nv-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.nv-rise-1 { animation-delay: 0.12s; }
+.nv-rise-2 { animation-delay: 0.24s; }
+.nv-word-a { animation: nv-word-a 12s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+.nv-word-b { animation: nv-word-b 12s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+.nv-drift-a { animation: nv-drift-a 9s ease-in-out infinite; }
+.nv-drift-b { animation: nv-drift-b 11s ease-in-out infinite; }
+.nv-drift-c { animation: nv-drift-c 8s ease-in-out infinite; }
+.nv-ticker { animation: nv-ticker 22s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nv-rise, .nv-word-a, .nv-word-b,
+  .nv-drift-a, .nv-drift-b, .nv-drift-c, .nv-ticker { animation: none; }
+  .nv-word-b { opacity: 0; }
+}

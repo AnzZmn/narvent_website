@@ -1,0 +1,19 @@
+/* Narvent · Our Offerings (mobile, light) — keyframes only.
+   All layout/colour is Tailwind utility classes on the components. */
+
+@keyframes nv-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes nv-drift { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(6px, -9px); } }
+@keyframes nv-flow { to { stroke-dashoffset: -120; } }
+@keyframes nv-breathe { 0%, 100% { transform: scale(1); opacity: .85; } 50% { transform: scale(1.12); opacity: 1; } }
+
+/* SVG children scale about their own box, not the viewBox origin. */
+.nv-origin { transform-box: fill-box; transform-origin: center; }
+
+/* Hide the carousel scrollbar (no Tailwind utility for this). */
+.nv-rail { scrollbar-width: none; -ms-overflow-style: none; }
+.nv-rail::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nv-origin, [class*="animation:nv-"] { animation: none !important; }
+  .nv-rail { scroll-behavior: auto; }
+}
