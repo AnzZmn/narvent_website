@@ -13,7 +13,7 @@ const COMPANY_LINKS = [
 
 const SOCIALS = [
   {
-    href: "#instagram",
+    href: "https://www.instagram.com/narvent.in?igsi=MTg0bmFpNzViMjBoNw==",
     label: "Instagram",
     icon: (
       <>
@@ -24,7 +24,7 @@ const SOCIALS = [
     ),
   },
   {
-    href: "#whatsapp",
+    href: "https://talent.narvent.in/join",
     label: "WhatsApp",
     icon: (
       <>
@@ -34,7 +34,7 @@ const SOCIALS = [
     ),
   },
   {
-    href: "#facebook",
+    href: "https://www.facebook.com/share/1D8kXKQ2Y9/",
     label: "Facebook",
     icon: (
       <path d="M15.5 4h-2.2A3.3 3.3 0 0 0 10 7.3V10H8v3h2v7h3v-7h2.3l.7-3H13V7.7c0-.4.3-.7.7-.7h1.8V4Z" />
@@ -55,7 +55,13 @@ export default function FooterMobile() {
     >
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-2.5">
-          <svg width="19" height="33" viewBox="0 0 341 592" fill="none" aria-hidden="true">
+          <svg
+            width="19"
+            height="33"
+            viewBox="0 0 341 592"
+            fill="none"
+            aria-hidden="true"
+          >
             <path
               d="M341 409.643L340.313 158.737L50.2248 0V130.821L222.834 226.042V344.893L341 409.643Z"
               fill="#4a34cf"
