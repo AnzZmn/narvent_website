@@ -45,7 +45,7 @@ export default function Home() {
         {isMobile ? (
           <>
             <NarventHeroMap />
-            <LookingForWorkMobile />
+            <LookingForWorkMobile inlineForm />
             <NarventFAQMobile />
             <ForBusinessMobile framed={false} />
             <OurOfferingsMobile framed={false} />

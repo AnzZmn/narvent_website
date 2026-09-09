@@ -285,7 +285,10 @@ export default function LookingForWorkMobile({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            onSubmit?.(phone);
+
+            if (!phone) return;
+
+            window.location.href = `/register?contact=${encodeURIComponent(phone)}`;
           }}
           style={{
             padding: "0 24px",
@@ -304,7 +307,6 @@ export default function LookingForWorkMobile({
                 inputMode="numeric"
                 pattern="[0-9]*"
                 maxLength={10}
-                minLength={10}
                 placeholder="+91 mobile number"
                 value={phone}
                 onChange={(e) => {
