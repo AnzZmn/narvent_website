@@ -307,6 +307,7 @@ export default function LookingForWorkMobile({
                 inputMode="numeric"
                 pattern="[0-9]*"
                 maxLength={10}
+                minLength={10}
                 placeholder="+91 mobile number"
                 value={phone}
                 onChange={(e) => {
@@ -327,6 +328,7 @@ export default function LookingForWorkMobile({
                 inputMode="numeric"
                 pattern="[0-9]*"
                 maxLength={10}
+                minLength={10}
                 placeholder="+91 mobile number"
                 value={phone}
                 onChange={(e) => {
