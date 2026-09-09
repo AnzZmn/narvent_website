@@ -51,39 +51,53 @@ export default function Capabilities() {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   // snap each junction dot onto the nearest point of any connector path
+
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
+
     const links = svg.querySelector('[data-links="1"]');
     const dotsG = svg.querySelector('[data-dots="1"]');
+
     if (!links || !dotsG) return;
+
     const samples = Array.from(
       links.querySelectorAll<SVGPathElement>(":scope > path"),
     ).map((p) => {
       const len = p.getTotalLength();
+
       if (!len) return [] as DOMPoint[];
+
       const n = Math.max(24, Math.round(len / 8));
+
       return Array.from({ length: n + 1 }, (_, i) =>
         p.getPointAtLength((i / n) * len),
       );
     });
-    Array.from(
+
+    const circles = Array.from(
       dotsG.querySelectorAll<SVGCircleElement>(":scope > circle"),
-    ).forEach((c) => {
+    );
+
+    circles.forEach((c) => {
       const x = Number(c.getAttribute("cx"));
       const y = Number(c.getAttribute("cy"));
+
       let best: DOMPoint | null = null;
       let bd = Infinity;
-      samples.forEach((pts) =>
-        pts.forEach((pt) => {
+
+      for (const pts of samples) {
+        for (const pt of pts) {
           const d = (pt.x - x) ** 2 + (pt.y - y) ** 2;
+
           if (d < bd) {
             bd = d;
             best = pt;
           }
-        }),
-      );
-      if (best) {
+        }
+      }
+
+      if (best !== null) {
         c.setAttribute("cx", best.x.toFixed(1));
         c.setAttribute("cy", best.y.toFixed(1));
       }

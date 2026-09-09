@@ -3,20 +3,6 @@ import SplitText from "../SplitText";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-function SwapWord({ a, b }: { a: string; b: string }) {
-  return (
-    <span className="relative block py-1">
-      <span className="invisible">{a}</span>
-      <span className="nv-word-a absolute inset-x-0 top-1 text-center text-[#4a34cf]">
-        {a}
-      </span>
-      <span className="nv-word-b absolute inset-x-0 top-1 text-center text-[#4a34cf]">
-        {b}
-      </span>
-    </span>
-  );
-}
-
 export function HeroCopy() {
   const router = useRouter();
   return (

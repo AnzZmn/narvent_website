@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { HeroCopy } from "./HeroCopy";
 import { HeroMapBackdrop } from "./HeroMapBackdrop";
-import { HeroStatsGrid } from "./HeroStatsGrid";
 import { HeroTicker } from "./HeroTicker";
 import "./hero-map.css";
 

@@ -1,45 +1,5 @@
-import Image from "next/image";
-import AudienceSplit from "./SplitAudience";
 import { MarqueeDemoVertical } from "./JobMarquee";
 import { useState } from "react";
-
-const WORK = [
-  {
-    id: "01",
-    title: "Data collection & annotation",
-    description:
-      "Real-world data capture, cleansing and labelling for AI training, with quality checks built into every stage.",
-    photo: "/Annotation.png",
-  },
-  {
-    id: "02",
-    title: "Field operations for AI teams",
-    description:
-      "Distributed crews for surveys, capture routes and on-site validation, tracked live.",
-    photo: "/FieldOps1.jpg",
-  },
-  {
-    id: "03",
-    title: "Enterprise audits & inspections",
-    description:
-      "QR-based asset verification and multi-city inspection sweeps with full visibility.",
-    photo: "/Audit.jpg",
-  },
-  {
-    id: "04",
-    title: "Managed staffing at scale",
-    description:
-      "Part-time, contract and full-time crews with onboarding, attendance and payouts handled.",
-    photo: "/ManagedStaffing.jpg",
-  },
-  {
-    id: "05",
-    title: "Brand promotion & activations",
-    description:
-      "On-ground brand ambassadors for product launches, retail promotions, sampling campaigns and customer engagement across cities.",
-    photo: "/Promotion.jpg",
-  },
-];
 
 export default function WhatTheyDo() {
   const [phone, setPhone] = useState("");
@@ -94,6 +54,7 @@ export default function WhatTheyDo() {
             inputMode="numeric"
             pattern="[0-9]*"
             maxLength={10}
+            minLength={10}
             placeholder="+91 mobile number"
             value={phone}
             onChange={(e) => {
