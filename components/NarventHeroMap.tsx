@@ -272,7 +272,7 @@ export default function NarventHeroMapDesktop({
               href="#Business"
               className="group flex items-center gap-3 rounded-md border border-[var(--color-1)]/45 bg-[var(--color-1)]/[0.04] px-[22px] py-3.5 text-[18px] font-medium tracking-[-0.02em] text-[var(--color-1)] transition-colors hover:border-[var(--color-1)] hover:bg-[var(--color-1)]/[0.12]"
             >
-              Hire from the pool
+              For Business
               <ArrowRight className="size-5 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1.5" />
             </Link>
             <Link
@@ -286,7 +286,7 @@ export default function NarventHeroMapDesktop({
               }}
               className="group flex items-center gap-3 rounded-md border border-white/[0.14] bg-white/[0.03] px-[22px] py-3.5 text-[18px] font-medium tracking-[-0.02em] text-white transition-colors hover:border-[#5694ff]/60 hover:bg-[#5694ff]/[0.14]"
             >
-              find work.
+              Find work
               <ArrowRight className="size-5 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1.5" />
             </Link>
           </div>
