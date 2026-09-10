@@ -31,10 +31,13 @@ export const metadata: Metadata = {
 
   keywords: [
     "Narvent",
+    "Parttime work Kerala",
     "manpower solutions",
     "manpower solutions India",
+    "manpower solutions Kerala",
     "gig workforce platform",
     "gig workers India",
+    "gig workers Kerala",
     "blue collar workforce",
     "blue collar jobs India",
     "workforce management",

@@ -4,7 +4,7 @@ export default function StructuredData() {
     "@type": "Organization",
     name: "Narvent",
     url: "https://narvent.in",
-    logo: "https://www.narvent.in/NarventSVG.svg",
+    logo: "https://narvent.in/NarventSVG.svg",
     description:
       "AI-powered workforce and gig staffing platform connecting businesses with verified workers across India.",
     areaServed: {
