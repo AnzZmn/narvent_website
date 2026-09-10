@@ -75,7 +75,7 @@ export function HeroCopy() {
           }}
           className="flex h-[54px] items-center justify-center gap-2.5 rounded-[10px] bg-[#4a34cf] font-[Archivo] text-[16.5px] font-semibold text-white shadow-[0_14px_30px_rgba(74,52,207,0.28)] transition-colors hover:bg-[#3b2ab0]"
         >
-          find work.
+          Find work
           <ArrowRight className="size-5 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1.5" />
         </Link>
         <Link
@@ -87,7 +87,7 @@ export function HeroCopy() {
             router.push("/ContactUs");
           }}
         >
-          Hire from the pool
+          For Business
         </Link>
       </div>
 
