@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "Narvent is an AI-powered workforce platform connecting businesses with verified blue-collar and gig workers for field operations, audits, data collection, staffing, and workforce deployment across India.",
 
   icons: {
-    icon: "/NarventSVG.svg",
+    icon: "/NarventICO.svg",
   },
 
   applicationName: "Narvent",
@@ -89,7 +89,7 @@ export const metadata: Metadata = {
 
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/NarventICO.svg",
         width: 1200,
         height: 630,
         alt: "Narvent — AI-Powered Workforce Platform",
@@ -105,7 +105,7 @@ export const metadata: Metadata = {
     description:
       "AI-powered workforce and gig staffing platform for businesses across India.",
 
-    images: ["/opengraph-image.png"],
+    images: ["/NarventICO.svg"],
   },
 
   category: "technology",
