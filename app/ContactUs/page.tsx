@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Hire and deploy verified gig, blue-collar, and field workers for audits, surveys, data collection, operations, and workforce projects with Narvent.",
 
   alternates: {
-    canonical: "https://narvent.in/business",
+    canonical: "https://narvent.in/ContactUs",
   },
 
   icons: {
