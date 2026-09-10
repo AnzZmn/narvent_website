@@ -23,10 +23,6 @@ export const metadata: Metadata = {
   description:
     "Narvent is an AI-powered workforce platform connecting businesses with verified blue-collar and gig workers for field operations, audits, data collection, staffing, and workforce deployment across India.",
 
-  icons: {
-    icon: "/NarventICO.svg",
-  },
-
   applicationName: "Narvent",
 
   keywords: [

@@ -11,10 +11,6 @@ export const metadata: Metadata = {
     canonical: "https://narvent.in/ContactUs",
   },
 
-  icons: {
-    icon: "/NarventICO.svg",
-  },
-
   openGraph: {
     title: "Manpower & Gig Workforce Solutions | Narvent",
     description:
