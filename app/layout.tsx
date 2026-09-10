@@ -118,7 +118,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="overflow-x-clip">
+      <body className="overflow-x-clip bg-[#0b0813]">
         <StructuredData />
         {children}
       </body>
